@@ -5,18 +5,12 @@ import { Patterns } from "../utils/Patterns";
 
 export default function Home() {
   const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
-  const [player, setPlayer] = useState("O");
+  const [player, setPlayer] = useState("X");
   const [result, setResult] = useState({ winner: "none", state: "none" });
 
   useEffect(() => {
     checkWin();
     checkIfTie();
-
-    if (player == "X") {
-      setPlayer("O");
-    } else {
-      setPlayer("X");
-    }
   }, [board]);
 
   useEffect(() => {
@@ -30,9 +24,13 @@ export default function Home() {
     setBoard(
       board.map((val, idx) => {
         if (idx == square && val == "") {
+          if (player == "X") {
+            setPlayer("O");
+          } else {
+            setPlayer("X");
+          }
           return player;
         }
-
         return val;
       })
     );
@@ -48,9 +46,12 @@ export default function Home() {
           foundWinningPattern = false;
         }
       });
-
       if (foundWinningPattern) {
-        setResult({ winner: player, state: "Won" });
+        if (player == "X") {
+          setResult({ winner: "O", state: "Won" });
+        } else {
+          setResult({ winner: "X", state: "Won" });
+        }
       }
     });
   };
@@ -62,7 +63,6 @@ export default function Home() {
         filled = false;
       }
     });
-
     if (filled) {
       setResult({ winner: "No One", state: "Tie" });
     }
@@ -70,7 +70,7 @@ export default function Home() {
 
   const restartGame = () => {
     setBoard(["", "", "", "", "", "", "", "", ""]);
-    setPlayer("O");
+    setPlayer("X");
   };
 
   return (
