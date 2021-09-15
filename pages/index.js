@@ -36,8 +36,8 @@ export default function Home() {
     );
   };
 
-  const checkWin = () => {
-    Patterns.forEach((currPattern) => {
+  const checkWin = async () => {
+    await Patterns.forEach((currPattern) => {
       const firstPlayer = board[currPattern[0]];
       if (firstPlayer == "") return;
       let foundWinningPattern = true;
@@ -56,9 +56,9 @@ export default function Home() {
     });
   };
 
-  const checkIfTie = () => {
+  const checkIfTie = async () => {
     let filled = true;
-    board.forEach((square) => {
+    await board.forEach((square) => {
       if (square == "") {
         filled = false;
       }
